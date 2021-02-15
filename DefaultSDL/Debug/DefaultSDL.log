@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(18,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  DefaultSDL.vcxproj -> C:\C++ SDL\DefaultSDL\Debug\DefaultSDL.exe
