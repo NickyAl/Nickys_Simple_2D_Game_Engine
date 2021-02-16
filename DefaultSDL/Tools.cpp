@@ -1,6 +1,29 @@
 #include "Tools.h"
 //#include <iostream>
 
+std::string Tools::intToString(int num)
+{
+	if (num == 0)
+		return "0";
+
+	std::string result = "";
+	std::stack<char> buffer;
+
+	while (num)
+	{
+		buffer.push('0' + (num % 10));
+		num /= 10;
+	}
+
+	while (!buffer.empty())
+	{
+		result += buffer.top();
+		buffer.pop();
+	}
+	
+	return result;
+}
+
 bool Tools::HorizontalColision(Object& actor, Object& wall)
 {
 	if (actor.yCoord + actor.getH() <= wall.yCoord || wall.yCoord + wall.getH() <= actor.yCoord)
@@ -17,108 +40,128 @@ bool Tools::VerticalColision(Object& actor, Object& wall)
 	return true;
 }
 
-void Tools::playerCollider(Player& player, std::list<Object>& objects)
+void Tools::playerCollider(Player& player, std::list<Object*>& objects)
 {
 	Object actor = player.getCollisionBox();
-
-	for (std::list<Object>::iterator it = objects.begin(); it != objects.end(); it++)
+	Object* obj = nullptr;
+	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
-		if (HorizontalColision(actor, *it) && VerticalColision(actor, *it))
-		{
-			Object prevPos(actor.getW(), actor.getH(), actor.xCoord - (player.getAcclrtn().right - player.getAcclrtn().left), actor.yCoord - (player.getAcclrtn().down - player.getAcclrtn().up), 0, 0, 0, 0);
+		 obj = *it;
 
-			if (HorizontalColision(prevPos, *it))
+		 if (obj->getCollision() == false)
+			 continue;
+
+		if (HorizontalColision(actor, *obj) && VerticalColision(actor, *obj))
+		{
+			Object prevPos(actor.getW(), actor.getH(), actor.xCoord - (player.getAcclrtn().right - player.getAcclrtn().left), actor.yCoord - (player.getAcclrtn().down - player.getAcclrtn().up), 0, 0, 0, 0, true);
+
+			if (HorizontalColision(prevPos, **it))
 			{
-				if (inRange(actor.xCoord, it->xCoord, it->xCoord + it->getW()))
+				if (inRange(actor.xCoord, obj->xCoord, obj->xCoord + obj->getW()))
 				{
-					player.setLocX(it->xCoord + it->getW()); //stick to the right side
+					player.setLocX(obj->xCoord + obj->getW()); //stick to the right side
 				}
-				else if (inRange(actor.xCoord + actor.getW(), it->xCoord, it->xCoord + it->getW()))
+				else if (inRange(actor.xCoord + actor.getW(), obj->xCoord, obj->xCoord + obj->getW()))
 				{
-					player.setLocX(it->xCoord - actor.getW()); //stick to the left side
+					player.setLocX(obj->xCoord - actor.getW()); //stick to the left side
 				}
 			}
 			else
 			{
-				if (inRange(actor.yCoord, it->yCoord, it->yCoord + it->getH()))
+				if (inRange(actor.yCoord, obj->yCoord, obj->yCoord + obj->getH()))
 				{
-					player.setLocY(it->yCoord + it->getH()); //stick to the bottom	
+					player.setLocY(obj->yCoord + obj->getH()); //stick to the bottom	
 				}
 				else
 				{
-					player.setLocY(it->yCoord - actor.getH()); //stick to the top
+					player.setLocY(obj->yCoord - actor.getH()); //stick to the top
 				}
 			}
 		}
 	}
 }
 
-void Tools::cameraColiider(Player& player, std::list<Rect>& rects,std::list<Object>& objects)
+void Tools::cameraColiider(Player& player, std::list<Rect*>& rects,std::list<Object*>& objects)
 {
 	Object actor = player.getCollisionBox();
+	Object* obj = nullptr;
+	Rect* rect = nullptr;
 	int movement = 0;
 
-	for (std::list<Object>::iterator it = objects.begin(); it != objects.end(); it++)
+	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
-		if (HorizontalColision(actor, *it) && VerticalColision(actor, *it))
-		{
-			Object prevPos(actor.getW(), actor.getH(), actor.xCoord - (player.getAcclrtn().right - player.getAcclrtn().left), actor.yCoord - (player.getAcclrtn().down - player.getAcclrtn().up), 0, 0, 0, 0);
+		obj = *it;
 
-			if (HorizontalColision(prevPos, *it))
+		if (obj->getCollision() == false)
+			continue;
+
+		if (HorizontalColision(actor, *obj) && VerticalColision(actor, *obj))
+		{
+			Object prevPos(actor.getW(), actor.getH(), actor.xCoord - (player.getAcclrtn().right - player.getAcclrtn().left), actor.yCoord - (player.getAcclrtn().down - player.getAcclrtn().up), 0, 0, 0, 0, true);
+
+			if (HorizontalColision(prevPos, *obj))
 			{
-				if (inRange(actor.xCoord, it->xCoord, it->xCoord + it->getW()))
+				if (inRange(actor.xCoord, obj->xCoord, obj->xCoord + obj->getW()))
 				{
-					movement = (player.getLocX() - it->getW()) - it->xCoord;
-					for (std::list<Object>::iterator j = objects.begin(); j != objects.end(); j++)
+					movement = (player.getLocX() - obj->getW()) - obj->xCoord;
+					for (std::list<Object*>::iterator j = objects.begin(); j != objects.end(); j++)
 					{
-						j->moveX(movement);  //stick to the right of the player
+						obj = *j;
+						obj->moveX(movement);  //stick to the right of the player
 					}
-					for (std::list<Rect>::iterator j = rects.begin(); j != rects.end(); j++)
+					for (std::list<Rect*>::iterator j = rects.begin(); j != rects.end(); j++)
 					{
-						j->moveX(movement);  //stick to the right of the player
+						rect = *j;
+						rect->moveX(movement);  //stick to the right of the player
 					}
 					
 				}
-				else if (inRange(actor.xCoord + actor.getW(), it->xCoord, it->xCoord + it->getW()))
+				else if (inRange(actor.xCoord + actor.getW(), obj->xCoord, obj->xCoord + obj->getW()))
 				{
 					
-					movement = player.getLocX() - (it->xCoord - player.getW());
-					for (std::list<Object>::iterator j = objects.begin(); j != objects.end(); j++)
+					movement = player.getLocX() - (obj->xCoord - player.getW());
+					for (std::list<Object*>::iterator j = objects.begin(); j != objects.end(); j++)
 					{
-						j->moveX(movement);  //stick to the left of the player
+						obj = *j;
+						obj->moveX(movement);  //stick to the left of the player
 					}
-					for (std::list<Rect>::iterator j = rects.begin(); j != rects.end(); j++)
+					for (std::list<Rect*>::iterator j = rects.begin(); j != rects.end(); j++)
 					{
-						j->moveX(movement);  //stick to the left of the player
+						rect = *j;
+						rect->moveX(movement);  //stick to the left of the player
 					}
 				}
 			}
 			else
 			{
-				if (inRange(actor.yCoord, it->yCoord, it->yCoord + it->getH()))
+				if (inRange(actor.yCoord, obj->yCoord, obj->yCoord + obj->getH()))
 				{
-					movement = (player.getLocY() - it->getH()) - it->yCoord;
-					for (std::list<Object>::iterator j = objects.begin(); j != objects.end(); j++)
+					movement = (player.getLocY() - obj->getH()) - obj->yCoord;
+					for (std::list<Object*>::iterator j = objects.begin(); j != objects.end(); j++)
 					{
-						j->moveY(movement);  //stick to the top of the player
+						obj = *j;
+						obj->moveY(movement);  //stick to the top of the player
 					}
-					for (std::list<Rect>::iterator j = rects.begin(); j != rects.end(); j++)
+					for (std::list<Rect*>::iterator j = rects.begin(); j != rects.end(); j++)
 					{
-						j->moveY(movement);  //stick to the top of the player
+						rect = *j;
+						rect->moveY(movement);  //stick to the top of the player
 					}
 
 				}
-				else if (inRange(actor.yCoord + actor.getH(), it->yCoord, it->yCoord + it->getH()))
+				else if (inRange(actor.yCoord + actor.getH(), obj->yCoord, obj->yCoord + obj->getH()))
 				{
 
-					movement = player.getLocY() - (it->yCoord - player.getH());
-					for (std::list<Object>::iterator j = objects.begin(); j != objects.end(); j++)
+					movement = player.getLocY() - (obj->yCoord - player.getH());
+					for (std::list<Object*>::iterator j = objects.begin(); j != objects.end(); j++)
 					{
-						j->moveY(movement);  //stick to the bottom of the player
+						obj = *j;
+						obj->moveY(movement);  //stick to the bottom of the player
 					}
-					for (std::list<Rect>::iterator j = rects.begin(); j != rects.end(); j++)
+					for (std::list<Rect*>::iterator j = rects.begin(); j != rects.end(); j++)
 					{
-						j->moveY(movement);  //stick to the bottom of the player
+						rect = *j;
+						rect->moveY(movement);  //stick to the bottom of the player
 					}
 				}
 			}
@@ -128,20 +171,25 @@ void Tools::cameraColiider(Player& player, std::list<Rect>& rects,std::list<Obje
 
 
 
-void Tools::CameraFollowsPlayer(Player& player, std::list<Rect>& rects, std::list<Object>& objects)
+void Tools::CameraFollowsPlayer(Player& player, std::list<Rect*>& rects, std::list<Object*>& objects)
 {
 	int xMovement = -1 * (player.getAcclrtn().right - player.getAcclrtn().left);
 	int yMovement = -1 * (player.getAcclrtn().down - player.getAcclrtn().up);
 
-	for (std::list<Rect>::iterator it = rects.begin(); it != rects.end(); it++)
+	Object* obj = nullptr;
+	Rect* rect = nullptr;
+
+	for (std::list<Rect*>::iterator it = rects.begin(); it != rects.end(); it++)
 	{
-		it->moveX(xMovement);
-		it->moveY(yMovement);
+		rect = *it;
+		rect->moveX(xMovement);
+		rect->moveY(yMovement);
 	}
 
-	for (std::list<Object>::iterator it = objects.begin(); it != objects.end(); it++)
+	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
-		it->moveX(xMovement);
-		it->moveY(yMovement);
+		obj = *it;
+		obj->moveX(xMovement);
+		obj->moveY(yMovement);
 	}
 }

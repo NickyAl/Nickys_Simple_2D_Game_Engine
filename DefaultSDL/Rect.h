@@ -10,6 +10,8 @@ private:
 	int red, green, blue, alpha;
 	SDL_Texture* texture;
 
+	SDL_Texture** animation;
+
 public:
 
 	Rect(int w, int h, int x, int y, int r, int g, int b, int a);

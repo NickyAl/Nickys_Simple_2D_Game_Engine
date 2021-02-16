@@ -1,21 +1,22 @@
 #include "Object.h"
+#include "Tools.h"
 #include <SDL_image.h>
 #include <iostream>
 
 
 
 Object::Object() :
-	width(40), height(40), xCoord(500), yCoord(500), red(255), green(0), blue(0), alpha(255)
+	width(40), height(40), xCoord(500), yCoord(500), red(255), green(0), blue(0), alpha(255), hasCollision(false)
 {
 }
 
-Object::Object(int w, int h, int x, int y, int r, int g, int b, int a) :
-	width(w), height(h), xCoord(x), yCoord(y), red(r), green(g), blue(b), alpha(a)
+Object::Object(int w, int h, int x, int y, int r, int g, int b, int a, bool collsn) :
+	width(w), height(h), xCoord(x), yCoord(y), red(r), green(g), blue(b), alpha(a), hasCollision(collsn)
 {
 }
 
-Object::Object(int w, int h, int x, int y, const std::string& image_path) :
-	width(w), height(h), xCoord(x), yCoord(y)
+Object::Object(int w, int h, int x, int y, const std::string& image_path, bool collsn) :
+	width(w), height(h), xCoord(x), yCoord(y), hasCollision(collsn)
 {
 	auto surface = IMG_Load(image_path.c_str()); //c_str converts it to a construct pointer
 	if (!surface)
@@ -23,8 +24,8 @@ Object::Object(int w, int h, int x, int y, const std::string& image_path) :
 		std::cerr << "Failed to create surface\n";
 	}
 
-	_texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
-	if (!_texture)
+	texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
+	if (!texture)
 	{
 		std::cerr << "Failed to create texture\n";
 	}
@@ -34,16 +35,16 @@ Object::Object(int w, int h, int x, int y, const std::string& image_path) :
 
 Object::~Object()
 {
-	SDL_DestroyTexture(_texture);
+	SDL_DestroyTexture(texture);
 }
 
 void Object::draw() const
 {
 	SDL_Rect rect = { xCoord, yCoord, width, height };
 
-	if (_texture)
+	if (texture)
 	{
-		SDL_RenderCopy(Window::renderer, _texture, nullptr, &rect);
+		SDL_RenderCopy(Window::renderer, texture, nullptr, &rect);
 	}
 	else
 	{
@@ -74,4 +75,19 @@ SDL_Texture* Object::LoadTexture(std::string filepath)
 	}
 
 	return newTexture;
+}
+
+void Object::loadAnim(const std::string& filepath, int frames)
+{
+	animFrames = frames;
+	std::string path;
+
+	for (int i = 0; i < frames; i++)
+	{
+		path = filepath;
+		path += Tools::intToString(i);
+		path += ".png";
+
+		animation.push_back(LoadTexture(path));	
+	}
 }

@@ -10,6 +10,12 @@ Player::Player()
 	collisionBox.setX(100);
 	collisionBox.setY(150);
 	collisionBox.setColor(0, 255, 0, 255);
+
+	sprite.setW(10);
+	sprite.setH(15);
+	sprite.setX(100);
+	sprite.setY(150);
+	sprite.setColor(255, 255, 0, 255);
 }
 
 void Player::pollEvents(SDL_Event& event, float rs)
@@ -46,14 +52,15 @@ void Player::pollEvents(SDL_Event& event, float rs)
 
 void Player::draw() const
 {
-	collisionBox.draw();
+	//collisionBox.draw();
+	sprite.draw();
 }
 
 
 
 //SETTERS
 
-void Player::setBody(int w, int h, int x, int y, const char* texture)
+void Player::setCollisionBox(int w, int h, int x, int y, const char* texture)
 {
 	collisionBox.setW(w);
 	collisionBox.setH(h);
@@ -62,13 +69,22 @@ void Player::setBody(int w, int h, int x, int y, const char* texture)
 	collisionBox.setTexture(texture);
 }
 
-void Player::setBody(int w, int h, int x, int y, int r, int g, int b, int a)
+void Player::setCollisionBox(int w, int h, int x, int y, int r, int g, int b, int a)
 {
 	collisionBox.setW(w);
 	collisionBox.setH(h);
 	collisionBox.setX(x);
 	collisionBox.setY(y);
 	collisionBox.setColor(r, g, b, a);
+}
+
+void Player::setSprite(int w, int h, int x, int y, const char* texture)
+{
+	sprite.setW(w);
+	sprite.setH(h);
+	sprite.setX(x);
+	sprite.setY(y);
+	sprite.setTexture(texture);
 }
 
 void Player::updatePosition()
@@ -78,4 +94,7 @@ void Player::updatePosition()
 
 	collisionBox.moveX(acclrtn.right - acclrtn.left);
 	collisionBox.moveY(acclrtn.down - acclrtn.up);
+
+	sprite.setX(collisionBox.xCoord - 10 * RS);
+	sprite.setY(collisionBox.yCoord);
 }

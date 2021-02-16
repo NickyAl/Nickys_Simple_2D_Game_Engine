@@ -6,8 +6,11 @@ class Player
 {
 protected:
 	Object collisionBox;
+	Object sprite;
 
 private:
+	int RS = 0;
+
 	struct Acceleration
 	{
 		int left = 0;
@@ -22,15 +25,18 @@ private:
 
 public:
 	Player();
+	Player(int rs) { RS = rs; }
 
 	void pollEvents(SDL_Event& event, float rs);
 
 	void draw()const;
 
 	//SETTERS and GETTERS
+	void setCollisionBox(int w, int h, int x, int y, const char* texture);
+	void setCollisionBox(int w, int h, int x, int y, int r, int g, int b, int a);
 
-	void setBody(int w, int h, int x, int y, const char* texture);
-	void setBody(int w, int h, int x, int y, int r, int g, int b, int a);
+	void setSprite(int w, int h, int x, int y, const char* texture);
+	Object& getSprite() { return sprite; }
 
 	Object& getCollisionBox() { return collisionBox; }
 	Acceleration& getAcclrtn() { return acclrtn; }
