@@ -1,4 +1,15 @@
-﻿  main.cpp
+﻿  Tools.cpp
 C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(18,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(111,50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(115,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(120,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(127,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(131,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(136,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(144,50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(148,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(153,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(160,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(164,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Tools.cpp(169,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   DefaultSDL.vcxproj -> C:\C++ SDL\DefaultSDL\Debug\DefaultSDL.exe

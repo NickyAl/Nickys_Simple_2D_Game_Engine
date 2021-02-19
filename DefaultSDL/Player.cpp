@@ -18,21 +18,25 @@ Player::Player()
 	sprite.setColor(255, 255, 0, 255);
 }
 
-void Player::pollEvents(SDL_Event& event, float rs)
+void Player::pollEvents(SDL_Event& event, int rs, float tpf)
 {
+	float TPF = tpf;
+	int pixelMovement;
+
 	if (event.type == SDL_KEYDOWN)
 	{
 		if (SDLK_a == event.key.keysym.sym)
-			acclrtn.left = 3 * rs;
+			acclrtn.left = 180 * rs * TPF;
 
 		if (SDLK_d == event.key.keysym.sym)
-			acclrtn.right = 3 * rs;
+			acclrtn.right = 180 * rs * TPF;
 
 		if (SDLK_w == event.key.keysym.sym)
-			acclrtn.up = 3 * rs;
+			acclrtn.up = 180 * rs * TPF;
 
 		if (SDLK_s == event.key.keysym.sym)
-			acclrtn.down = 3 * rs;
+			acclrtn.down = 180 * rs * TPF;
+
 	}
 	else if(event.type == SDL_KEYUP)
 	{
@@ -60,7 +64,7 @@ void Player::draw() const
 
 //SETTERS
 
-void Player::setCollisionBox(int w, int h, int x, int y, const char* texture)
+void Player::setCollisionBox(int w, int h, float x, float y, const char* texture)
 {
 	collisionBox.setW(w);
 	collisionBox.setH(h);
@@ -69,7 +73,7 @@ void Player::setCollisionBox(int w, int h, int x, int y, const char* texture)
 	collisionBox.setTexture(texture);
 }
 
-void Player::setCollisionBox(int w, int h, int x, int y, int r, int g, int b, int a)
+void Player::setCollisionBox(int w, int h, float x, float y, int r, int g, int b, int a)
 {
 	collisionBox.setW(w);
 	collisionBox.setH(h);
@@ -92,9 +96,28 @@ void Player::updatePosition()
 	if (acclrtn.none())
 		return;
 
-	collisionBox.moveX(acclrtn.right - acclrtn.left);
-	collisionBox.moveY(acclrtn.down - acclrtn.up);
+	collisionBox.moveX((acclrtn.right - acclrtn.left));
+	collisionBox.moveY((acclrtn.down - acclrtn.up));
 
-	sprite.setX(collisionBox.xCoord - 10 * RS);
-	sprite.setY(collisionBox.yCoord);
+	//collisionBox.setX(round(collisionBox.getRealX()));
+	//collisionBox.setY(round(collisionBox.getRealY()));
+
+	std::cout << collisionBox.getX() << " " << collisionBox.getY() << '\n';
+
+	sprite.setX(collisionBox.getX() - 8 * RS);
+	sprite.setY(collisionBox.getY());
+}
+
+void Player::updateState()
+{
+	if (acclrtn.none())
+		state = idle;
+	else
+		state = running;
+}
+
+void Player::updatePlayerSprite(int currentFrame)
+{
+	sprite.updateSprite(currentFrame);
+	//TO FINISH
 }

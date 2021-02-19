@@ -13,27 +13,35 @@ private:
 
 	struct Acceleration
 	{
-		int left = 0;
-		int right = 0;
-		int up = 0;
-		int down = 0;
+		float left = 0;
+		float right = 0;
+		float up = 0;
+		float down = 0;
 
 		bool none() { return left == 0 && right == 0 && up == 0 && down == 0; }
 	};
 
 	Acceleration acclrtn;
 
+	enum State
+	{
+		idle = 0,
+		running = 1
+	};
+
+	State state;
+
 public:
 	Player();
 	Player(int rs) { RS = rs; }
 
-	void pollEvents(SDL_Event& event, float rs);
+	void pollEvents(SDL_Event& event, int rs, float tpf);
 
 	void draw()const;
 
 	//SETTERS and GETTERS
-	void setCollisionBox(int w, int h, int x, int y, const char* texture);
-	void setCollisionBox(int w, int h, int x, int y, int r, int g, int b, int a);
+	void setCollisionBox(int w, int h, float x, float y, const char* texture);
+	void setCollisionBox(int w, int h, float x, float y, int r, int g, int b, int a);
 
 	void setSprite(int w, int h, int x, int y, const char* texture);
 	Object& getSprite() { return sprite; }
@@ -41,19 +49,21 @@ public:
 	Object& getCollisionBox() { return collisionBox; }
 	Acceleration& getAcclrtn() { return acclrtn; }
 
-	int getLocX() { return collisionBox.xCoord; }
-	int getLocY() { return collisionBox.yCoord; }
-	void setLocX(int x) { collisionBox.xCoord = x; }
-	void setLocY(int y) { collisionBox.yCoord = y; }
+	float getLocX() { return collisionBox.getX(); }
+	float getLocY() { return collisionBox.getY(); }
+	void setLocX(float x) { collisionBox.setX(x); }
+	void setLocY(float y) { collisionBox.setY(y); }
 
-	int getH() { return collisionBox.getH(); }
-	int getW() { return collisionBox.getW(); }
+	float getH() { return collisionBox.getH(); }
+	float getW() { return collisionBox.getW(); }
 
-	int getAcsLeft() { return acclrtn.left; }
-	int getAcsRight() { return acclrtn.right; }
-	int getAcsUp() { return acclrtn.up; }
-	int getAcsDown() { return acclrtn.down; }
+	float getAcsLeft() { return acclrtn.left; }
+	float getAcsRight() { return acclrtn.right; }
+	float getAcsUp() { return acclrtn.up; }
+	float getAcsDown() { return acclrtn.down; }
 
 	void updatePosition();
+	void updateState();
+	void updatePlayerSprite(int currentFrame);
 };
 

@@ -10,12 +10,12 @@ Object::Object() :
 {
 }
 
-Object::Object(int w, int h, int x, int y, int r, int g, int b, int a, bool collsn) :
+Object::Object(float w, float h, float x, float y, int r, int g, int b, int a, bool collsn) :
 	width(w), height(h), xCoord(x), yCoord(y), red(r), green(g), blue(b), alpha(a), hasCollision(collsn)
 {
 }
 
-Object::Object(int w, int h, int x, int y, const std::string& image_path, bool collsn) :
+Object::Object(float w, float h, float x, float y, const std::string& image_path, bool collsn) :
 	width(w), height(h), xCoord(x), yCoord(y), hasCollision(collsn)
 {
 	auto surface = IMG_Load(image_path.c_str()); //c_str converts it to a construct pointer

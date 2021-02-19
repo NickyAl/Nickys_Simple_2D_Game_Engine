@@ -2,12 +2,12 @@
 #include <SDL_image.h>
 #include <iostream>
 
-Rect::Rect(int w, int h, int x, int y, int r, int g, int b, int a) :
+Rect::Rect(float w, float h, float x, float y, int r, int g, int b, int a) :
 	width(w), height(h), xCoord(x), yCoord(y), red(r), green(g), blue(b), alpha(a)
 {
 }
 
-Rect::Rect(int w, int h, int x, int y, const std::string& image_path) :
+Rect::Rect(float w, float h, float x, float y, const std::string& image_path) :
 	width(w), height(h), xCoord(x), yCoord(y)
 {
 	auto surface = IMG_Load(image_path.c_str()); //c_str converts it to a construct pointer

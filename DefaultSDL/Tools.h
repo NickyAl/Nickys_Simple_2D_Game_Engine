@@ -11,7 +11,7 @@ class Tools
 
 public:
 	//MATH TOOLS
-	static bool inRange(int a, int b, int c)
+	static bool inRange(float a, float b, float c)
 	{
 		return a >= b && a <= c;
 	}
