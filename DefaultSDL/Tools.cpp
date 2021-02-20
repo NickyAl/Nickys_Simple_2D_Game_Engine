@@ -86,7 +86,7 @@ void Tools::cameraColiider(Player& player, std::list<Rect*>& rects,std::list<Obj
 	Object actor = player.getCollisionBox();
 	Object* obj = nullptr;
 	Rect* rect = nullptr;
-	int movement = 0;
+	float movement = 0;
 
 	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
@@ -116,7 +116,7 @@ void Tools::cameraColiider(Player& player, std::list<Rect*>& rects,std::list<Obj
 					}
 					
 				}
-				else if (inRange(actor.getX() + actor.getW(), obj->getX(), obj->getX() + obj->getW()))
+				else if (inRange(actor.getX() + actor.getW(), obj->getX(), obj->getX() + obj->getW())) 
 				{
 					
 					movement = player.getLocX() - (obj->getX() - player.getW());

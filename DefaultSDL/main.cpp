@@ -111,7 +111,7 @@ int main(int argc, char** argv)
 	float TIME_PER_FRAME = 0.016;
 
 	//Stuff needed to lock fps
-	const int FPS = 60;
+	const int FPS = 144;
 	const int frameDelay = 1000 / FPS;
 
 	Uint32 frameStart;
