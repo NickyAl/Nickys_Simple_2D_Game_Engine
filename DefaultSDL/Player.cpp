@@ -16,26 +16,32 @@ Player::Player()
 	sprite.setX(100);
 	sprite.setY(150);
 	sprite.setColor(255, 255, 0, 255);
+
+	hasJumped = false;
 }
 
-void Player::pollEvents(SDL_Event& event, int rs, float tpf)
+void Player::pollEvents(SDL_Event& event, float tpf)
 {
+	static float jumpTimer = 0;
+
 	float TPF = tpf;
 	int pixelMovement;
 
 	if (event.type == SDL_KEYDOWN)
 	{
 		if (SDLK_a == event.key.keysym.sym)
-			acclrtn.left = 180 * rs * TPF;
+			acclrtn.left = 180 * RS * TPF;
 
 		if (SDLK_d == event.key.keysym.sym)
-			acclrtn.right = 180 * rs * TPF;
+			acclrtn.right = 180 * RS * TPF;
 
 		if (SDLK_w == event.key.keysym.sym)
-			acclrtn.up = 180 * rs * TPF;
-
+		{
+			if (canJump)
+				hasJumped = true;
+		}
 		if (SDLK_s == event.key.keysym.sym)
-			acclrtn.down = 180 * rs * TPF;
+			acclrtn.down = 180 * RS * TPF;
 
 	}
 	else if(event.type == SDL_KEYUP)
@@ -47,8 +53,12 @@ void Player::pollEvents(SDL_Event& event, int rs, float tpf)
 			acclrtn.right = 0;
 
 		if (SDLK_w == event.key.keysym.sym)
+		{
 			acclrtn.up = 0;
-
+			jumpTimer -= tpf;
+			if (jumpTimer < 0)
+				jumpTimer = 0;
+		}
 		if (SDLK_s == event.key.keysym.sym)
 			acclrtn.down = 0;
 	}
@@ -58,6 +68,28 @@ void Player::draw() const
 {
 	//collisionBox.draw();
 	sprite.draw();
+}
+
+void Player::gravity(float TPF)
+{
+	static float jumpTimer = 0;
+
+	if (hasJumped)
+	{
+		if (jumpTimer < 0.4)
+		{
+			acclrtn.up = 550 * RS * TPF;
+			jumpTimer += TPF;
+		}
+		else
+		{
+			acclrtn.up = 0;
+			jumpTimer = 0;
+			hasJumped = false;
+		}
+	}
+
+	acclrtn.down = 350 * RS * TPF;
 }
 
 
@@ -98,9 +130,6 @@ void Player::updatePosition()
 
 	collisionBox.moveX((acclrtn.right - acclrtn.left));
 	collisionBox.moveY((acclrtn.down - acclrtn.up));
-
-	//collisionBox.setX(round(collisionBox.getRealX()));
-	//collisionBox.setY(round(collisionBox.getRealY()));
 
 	std::cout << collisionBox.getX() << " " << collisionBox.getY() << '\n';
 

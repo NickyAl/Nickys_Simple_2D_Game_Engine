@@ -70,11 +70,12 @@ void Tools::playerCollider(Player& player, std::list<Object*>& objects)
 			{
 				if (inRange(actor.getY(), obj->getY(), obj->getY() + obj->getH()))
 				{
-					player.setLocY(obj->getY() + obj->getH()); //stick to the bottom	
+					player.setLocY(obj->getY() + obj->getH()); //stick to the bottom
 				}
 				else
 				{
 					player.setLocY(obj->getY() - actor.getH()); //stick to the top
+					player.canJump = true;
 				}
 			}
 		}
@@ -157,11 +158,13 @@ void Tools::cameraColiider(Player& player, std::list<Rect*>& rects,std::list<Obj
 					{
 						obj = *j;
 						obj->moveY(movement);  //stick to the bottom of the player
+						player.canJump = true;
 					}
 					for (std::list<Rect*>::iterator j = rects.begin(); j != rects.end(); j++)
 					{
 						rect = *j;
 						rect->moveY(movement);  //stick to the bottom of the player
+						player.canJump = true;
 					}
 				}
 			}

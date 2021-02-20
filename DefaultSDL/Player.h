@@ -9,6 +9,7 @@ protected:
 	Object sprite;
 
 private:
+	//movement
 	int RS = 0;
 
 	struct Acceleration
@@ -23,6 +24,8 @@ private:
 
 	Acceleration acclrtn;
 
+	bool hasJumped = false;
+
 	enum State
 	{
 		idle = 0,
@@ -32,12 +35,16 @@ private:
 	State state;
 
 public:
+	bool canJump;
+
 	Player();
 	Player(int rs) { RS = rs; }
 
-	void pollEvents(SDL_Event& event, int rs, float tpf);
+	void pollEvents(SDL_Event& event, float tpf);
 
 	void draw()const;
+
+	void gravity(float TPF);
 
 	//SETTERS and GETTERS
 	void setCollisionBox(int w, int h, float x, float y, const char* texture);

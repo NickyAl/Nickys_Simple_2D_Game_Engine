@@ -9,14 +9,14 @@
 #include <list>
 #include <chrono>
 
-void pollEvents(Window& window, Player& player1, int resolutionSetting, float time_per_frame)
+void pollEvents(Window& window, Player& player1, float time_per_frame)
 {
 	SDL_Event event;
 
 	if (SDL_PollEvent(&event))
 	{
 		window.pollEvents(event);
-		player1.pollEvents(event, resolutionSetting, time_per_frame);
+		player1.pollEvents(event, time_per_frame);
 	}
 }
 
@@ -60,29 +60,33 @@ int main(int argc, char** argv)
 	//simple rectangles no animation no collision
 	//------------------------------------------------------------------------------------------
 	Rect sky(640 * RS, 360 * RS, 0, 0, "Resources/sky.jpeg");
-	Rect floor(900 * RS, 100 * RS, 0, 260 * RS, 75, 45, 10, 255);
+	Rect underground(900 * RS, 100 * RS, 0, 280 * RS, 75, 45, 10, 255);
 
 	std::list<Rect*> rects;
 	//rects.push_back(&sky);
-	rects.push_back(&floor);
+	rects.push_back(&underground);
 
 
 	//complex rectangles possible animations and collisions
 	//------------------------------------------------------------------------------------------
-	Object grass(1200 * RS, 25 * RS, 0, 245 * RS, 20, 150, 20, 255, true);
-	Object wall(6 * RS, 50 * RS, 500 * RS, 100 * RS, 180, 30, 30, 200, true);
-	Object ground(100 * RS, 5 * RS, 10 * RS, 150 * RS, 180, 30, 30, 1, true);
-	Object box(75 * RS, 75 * RS, 400 * RS, 175 * RS, 180, 100, 50, 1, true);
+	Object grass(1200 * RS, 25 * RS, 0, 265 * RS, 20, 150, 20, 255, true);
+	Object platform(100 * RS, 5 * RS, 700 * RS, 150 * RS, 180, 30, 30, 200, true);
+	Object platform1(100 * RS, 5 * RS, 500 * RS, 100 * RS, 180, 30, 30, 1, true);
+	Object box(75 * RS, 75 * RS, 400 * RS, 200 * RS, 180, 100, 50, 1, true);
 	Object coin(20 * RS, 20 * RS, 200 * RS, 200 * RS, "Resources/coin/Gold_0.png", false);
-	
+	Object platform2(70 * RS, 5 * RS, -100 * RS, 320 * RS, 150, 150, 150, 10, true);
+	Object platform3(120 * RS, 5 * RS, 510 * RS, 230 * RS, 180, 30, 30, 200, true);
+
 	coin.loadAnim("Resources/coin/Gold_", 10);
 
 	std::list<Object*> objects;
-	objects.push_back(&wall);
-	objects.push_back(&ground);
+	objects.push_back(&platform2);
+	objects.push_back(&platform1);
 	objects.push_back(&grass);
 	objects.push_back(&box);
 	objects.push_back(&coin);
+	objects.push_back(&platform);
+	objects.push_back(&platform3);
 
 
 	//text for UI
@@ -93,9 +97,9 @@ int main(int argc, char** argv)
 	//Player actor
 	//------------------------------------------------------------------------------------------
 	Player player1(RS);
-	player1.setCollisionBox(25*RS, 60*RS, 280*RS, 180*RS, 255, 200, 10, 1);
-	player1.setSprite(42 * RS, 72 * RS, 272 * RS, 180 * RS, "Resources/maniken/maniken0.png");
-	player1.getSprite().loadAnim("Resources/maniken/maniken", 20);
+	player1.setCollisionBox(40*RS, 70*RS, 280*RS, 180*RS, 255, 200, 10, 1);
+	player1.setSprite(55 * RS, 75 * RS, 272 * RS, 180 * RS, "Resources/maniken/maniken0.png");
+	player1.getSprite().loadAnim("Resources/Yellow bot/", 22);
 
 
 	//Const and others used in each frames logic
@@ -128,7 +132,10 @@ int main(int argc, char** argv)
 
 		frameStart = SDL_GetTicks();
 
-		pollEvents(window, player1, RS, TIME_PER_FRAME);
+		pollEvents(window, player1, TIME_PER_FRAME);
+		player1.gravity(TIME_PER_FRAME);
+		player1.canJump = false;
+
 
 		if (CAMERA_FOLLOWS_PLAYER)
 		{
@@ -148,8 +155,9 @@ int main(int argc, char** argv)
 		}
 		if (FRAME_TIMER % 7 == 0)
 		{
+			//player1.getSprite().updateSprite(frame_changer[1]);
 			player1.getSprite().updateSprite(frame_changer[1]);
-			frame_changer[1]++;	
+			frame_changer[1]++;
 		}
 		
 		sky.draw(); //will add fixed to the screen items list if there are more such as this one
