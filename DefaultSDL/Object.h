@@ -15,7 +15,7 @@ private:
 	bool hasCollision;
 
 	std::vector<SDL_Texture*> animation;
-	unsigned int animFrames;
+	short int animFrames;
 
 
 public:
@@ -30,11 +30,11 @@ public:
 
 	//Sprites and Textures
 	SDL_Texture* LoadTexture(std::string filepath);
-	void loadAnim(const std::string& filepath, int frames);
+	void loadAnim(const std::string& filepath, short int frames);
 
 	void setTexture(SDL_Texture* newTexture) { texture = newTexture; }
 
-	void updateSprite(int currentFrame) { setTexture(animation[currentFrame % animFrames]); }
+	void updateSprite(float tpf, float cooldown);
 
 	//SETTERS AND GETTERS
 	void setW(float w) { width = w; }

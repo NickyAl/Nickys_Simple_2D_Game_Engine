@@ -60,29 +60,34 @@ int main(int argc, char** argv)
 	//simple rectangles no animation no collision
 	//------------------------------------------------------------------------------------------
 	Rect sky(640 * RS, 360 * RS, 0, 0, "Resources/sky.jpeg");
-	Rect underground(900 * RS, 100 * RS, 0, 280 * RS, 75, 45, 10, 255);
+	Rect underground(1200 * RS, 600 * RS, 0, 280 * RS, 60, 60, 60, 255);
 
 	std::list<Rect*> rects;
-	//rects.push_back(&sky);
 	rects.push_back(&underground);
 
 
 	//complex rectangles possible animations and collisions
 	//------------------------------------------------------------------------------------------
-	Object grass(1200 * RS, 25 * RS, 0, 265 * RS, 20, 150, 20, 255, true);
-	Object platform(100 * RS, 5 * RS, 700 * RS, 150 * RS, 180, 30, 30, 200, true);
-	Object platform1(100 * RS, 5 * RS, 500 * RS, 100 * RS, 180, 30, 30, 1, true);
-	Object box(75 * RS, 75 * RS, 400 * RS, 200 * RS, 180, 100, 50, 1, true);
+	Object floor1(300 * RS, 60 * RS, 0 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
+	Object floor2(300 * RS, 60 * RS, 300 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
+	Object floor3(300 * RS, 60 * RS, 600 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
+	Object floor4(300 * RS, 60 * RS, 900 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
+	Object box(75 * RS, 75 * RS, 400 * RS, 200 * RS, "Resources/metal box.png", true);
 	Object coin(20 * RS, 20 * RS, 200 * RS, 200 * RS, "Resources/coin/Gold_0.png", false);
-	Object platform2(70 * RS, 5 * RS, -100 * RS, 320 * RS, 150, 150, 150, 10, true);
-	Object platform3(120 * RS, 5 * RS, 510 * RS, 230 * RS, 180, 30, 30, 200, true);
+	Object platform(100 * RS, 10 * RS, 700 * RS, 150 * RS, "Resources/platform.jpg", true);
+	Object platform1(100 * RS, 10 * RS, 500 * RS, 100 * RS, "Resources/platform.jpg", true);
+	Object platform2(70 * RS, 10 * RS, 100 * RS, 180 * RS, "Resources/platform.jpg", true);
+	Object platform3(120 * RS, 10 * RS, 510 * RS, 230 * RS, "Resources/platform.jpg", true);
 
 	coin.loadAnim("Resources/coin/Gold_", 10);
 
 	std::list<Object*> objects;
 	objects.push_back(&platform2);
 	objects.push_back(&platform1);
-	objects.push_back(&grass);
+	objects.push_back(&floor1);
+	objects.push_back(&floor2);
+	objects.push_back(&floor3);
+	objects.push_back(&floor4);
 	objects.push_back(&box);
 	objects.push_back(&coin);
 	objects.push_back(&platform);
@@ -99,20 +104,24 @@ int main(int argc, char** argv)
 	Player player1(RS);
 	player1.setCollisionBox(40*RS, 70*RS, 280*RS, 180*RS, 255, 200, 10, 1);
 	player1.setSprite(55 * RS, 75 * RS, 272 * RS, 180 * RS, "Resources/maniken/maniken0.png");
-	player1.getSprite().loadAnim("Resources/Yellow bot/", 22);
-
+	//player1.getSprite().loadAnim("Resources/Yellow bot/running right/", 22);
+	player1.loadAnim("Resources/Yellow bot/running left/", 22, player1.getRunLeft(), player1.getRunLeftFrames());
+	player1.loadAnim("Resources/Yellow bot/running right/", 22, player1.getRunRight(), player1.getRunRightFrames());
+	player1.loadAnim("Resources/Yellow bot/idle right/", 8, player1.getIdleRight(), player1.getIdleRightFrames());
+	player1.loadAnim("Resources/Yellow bot/idle left/", 8, player1.getIdleLeft(), player1.getIdleLeftFrames());
+	player1.loadAnim("Resources/Yellow bot/fall right/", 4, player1.getFallRight(), player1.getFallRightFrames());
+	player1.loadAnim("Resources/Yellow bot/fall left/", 4, player1.getFallLeft(), player1.getFallLeftFrames());
+	player1.loadAnim("Resources/Yellow bot/jump right/", 8, player1.getJumpRight(), player1.getJumpRightFrames());
+	player1.loadAnim("Resources/Yellow bot/jump left/", 8, player1.getJumpLeft(), player1.getJumpLeftFrames());
 
 	//Const and others used in each frames logic
 	//------------------------------------------------------------------------------------------
 	const bool CAMERA_FOLLOWS_PLAYER = true;
 
-	int FRAME_TIMER = 0;
-	int frame_changer[2] = { 0 }; //2 for 2 animated objects
-
 	Object* objIt = nullptr;
 	Rect* rectIt = nullptr;
 
-	float TIME_PER_FRAME = 0.016;
+	float TIME_PER_FRAME = 0;
 
 	//Stuff needed to lock fps
 	const int FPS = 144;
@@ -127,8 +136,6 @@ int main(int argc, char** argv)
 	while (!window.isClosed())
 	{
 		auto frame_start = std::chrono::high_resolution_clock::now();
-
-		FRAME_TIMER++;
 
 		frameStart = SDL_GetTicks();
 
@@ -148,18 +155,9 @@ int main(int argc, char** argv)
 			Tools::playerCollider(player1, objects);
 		}
 
-		if (FRAME_TIMER % 5 == 0)
-		{
-			coin.updateSprite(frame_changer[0]);
-			frame_changer[0]++;
-		}
-		if (FRAME_TIMER % 7 == 0)
-		{
-			//player1.getSprite().updateSprite(frame_changer[1]);
-			player1.getSprite().updateSprite(frame_changer[1]);
-			frame_changer[1]++;
-		}
-		
+		player1.updateSprite(TIME_PER_FRAME);
+		coin.updateSprite(TIME_PER_FRAME, 0.07);
+
 		sky.draw(); //will add fixed to the screen items list if there are more such as this one
 		for (std::list<Rect*>::iterator it = rects.begin(); it != rects.end(); it++)
 		{
@@ -186,12 +184,10 @@ int main(int argc, char** argv)
 			SDL_Delay(frameDelay - frameTime);
 		}
 
-
 		auto frame_end = std::chrono::high_resolution_clock::now();
 
 		std::chrono::duration<float> duration = frame_end - frame_start;
 		TIME_PER_FRAME = duration.count();
-		//std::cout << duration.count();
 	}
 
 	return 0;

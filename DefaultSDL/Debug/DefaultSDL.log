@@ -1,21 +1,58 @@
-﻿  main.cpp
+﻿  Object.cpp
+C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,20): warning C4838: conversion from 'const float' to 'int' requires a narrowing conversion
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,20): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,28): warning C4838: conversion from 'const float' to 'int' requires a narrowing conversion
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,28): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,36): warning C4838: conversion from 'const float' to 'int' requires a narrowing conversion
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,36): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,43): warning C4838: conversion from 'const float' to 'int' requires a narrowing conversion
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(43,43): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(100,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Object.cpp(106,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Player.cpp
+C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(71,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(79,18): warning C4305: '=': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(83,18): warning C4305: '=': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(87,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(91,18): warning C4305: '=': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(94,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(99,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(168,6): warning C4101: 'pixelMovement': unreferenced local variable
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(247,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(248,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(256,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(257,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(265,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(266,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(267,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\Player.cpp(268,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Tools.cpp
+C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  main.cpp
 C:\C++ SDL\DefaultSDL\DefaultSDL\Window.h(36,23): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(62,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(62,15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(72,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(63,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(71,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(71,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(71,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(71,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(72,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(72,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(72,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(72,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(73,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(74,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(75,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(75,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(75,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -26,13 +63,22 @@ C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(76,26): warning C4244: 'argument': con
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(76,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(77,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(77,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(77,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(77,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(77,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(78,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(100,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(100,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(115,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(79,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(79,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(79,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(79,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(80,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(80,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(80,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(80,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(105,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(105,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\C++ SDL\DefaultSDL\DefaultSDL\main.cpp(159,41): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   DefaultSDL.vcxproj -> C:\C++ SDL\DefaultSDL\Debug\DefaultSDL.exe

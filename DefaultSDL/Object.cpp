@@ -77,7 +77,7 @@ SDL_Texture* Object::LoadTexture(std::string filepath)
 	return newTexture;
 }
 
-void Object::loadAnim(const std::string& filepath, int frames)
+void Object::loadAnim(const std::string& filepath, short int frames)
 {
 	animFrames = frames;
 	std::string path;
@@ -90,4 +90,31 @@ void Object::loadAnim(const std::string& filepath, int frames)
 
 		animation.push_back(LoadTexture(path));	
 	}
+}
+
+void Object::updateSprite(float tpf, float cooldown)
+{
+	static float timer = 0;
+	static short int frame = 0;
+
+	int divider = 1000 * cooldown;
+
+	timer += tpf;
+
+	if (timer > cooldown)
+	{
+		int check = timer * 1000;
+		if (check / divider > 1)
+		{
+			frame += check / divider;
+		}
+		else
+			frame++;
+		timer = 0;
+	}
+
+	if (frame >= animFrames)
+		frame = 0;
+	
+	setTexture(animation[frame]);
 }

@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string>
+#include "Tools.h"
 
 Player::Player()
 {
@@ -18,22 +19,167 @@ Player::Player()
 	sprite.setColor(255, 255, 0, 255);
 
 	hasJumped = false;
+	lookingRight = true;
+}
+
+SDL_Texture* Player::LoadTexture(std::string filepath)
+{
+	SDL_Texture* newTexture = nullptr;
+
+	SDL_Surface* loadedSurf = IMG_Load(filepath.c_str());
+
+	if (loadedSurf == nullptr)
+	{
+		std::cerr << "Failed to load pawn texture\n";
+	}
+	else
+	{
+		newTexture = SDL_CreateTextureFromSurface(Window::renderer, loadedSurf);
+		if (newTexture == nullptr)
+		{
+			std::cerr << "Failed to create texture for pawn\n";
+		}
+		SDL_FreeSurface(loadedSurf);
+	}
+
+	return newTexture;
+}
+
+void Player::loadAnim(const std::string& filepath, short int frames, std::vector<SDL_Texture*>& animation, short int& forFrames)
+{
+	std::string path;
+
+	for (int i = 0; i < frames; i++)
+	{
+		path = filepath;
+		path += Tools::intToString(i);
+		path += ".png";
+
+		animation.push_back(LoadTexture(path));	
+	}
+
+	forFrames = frames;
+}
+
+void Player::updateSprite(float tpf)
+{
+
+	static float timer = 0;
+	static short int frame = 0;
+	static short int jumpFrame = 0;
+
+	float cooldown = 0.025;
+	int divider = 25;
+
+	timer += tpf;
+
+	//set cooldown between frames of the animation for each animation
+	if (hasJumped)
+	{
+		cooldown = 0.06;
+	}
+	else if (!canJump && acclrtn.up == 0)
+	{
+		cooldown = 0.15;
+	}
+	else if (acclrtn.right - acclrtn.left != 0)
+	{
+		cooldown = 0.027;
+	}
+	else if (acclrtn.right - acclrtn.left == 0)
+	{
+		cooldown = 0.15;
+	}
+
+	divider = 1000 * cooldown;
+
+	//calculate frame number
+	if (timer > cooldown)
+	{
+		int check = timer * 1000;
+		if (check / divider > 1)
+		{
+			frame += check / divider;
+		}
+		else
+		{
+			frame++;
+			if (hasJumped)
+				jumpFrame++;
+			else
+				jumpFrame = 0;
+		}
+
+		timer = 0;
+	}
+
+	//set to the frame of the right animation
+	if (hasJumped)
+	{
+		if (jumpFrame >= jumpRightFrames)
+		{
+			jumpFrame = jumpRightFrames - 1;
+		}
+
+		if (lookingRight)
+			this->sprite.setTexture(jumpRight[jumpFrame]);
+		else
+			this->sprite.setTexture(jumpLeft[jumpFrame]);
+	}
+	else if (!canJump && acclrtn.up == 0)
+	{
+		if (frame >= fallRightFrames)
+			frame = 0;
+
+		if (lookingRight)
+			this->sprite.setTexture(fallRight[frame]);
+		else
+			this->sprite.setTexture(fallLeft[frame]);
+	}
+	else if (acclrtn.right - acclrtn.left < 0)
+	{
+		if (frame >= runLeftFrames)
+			frame = 0;
+
+		this->sprite.setTexture(runLeft[frame]);
+	}
+	else if (acclrtn.right - acclrtn.left > 0)
+	{
+		if (frame >= runRightFrames)
+			frame = 0;
+
+		this->sprite.setTexture(runRight[frame]);
+	}
+	else if (acclrtn.right - acclrtn.left == 0)
+	{
+		if (frame >= idleRightFrames)
+			frame = 0;
+
+		if (lookingRight)
+			this->sprite.setTexture(idleRight[frame]);
+		else
+			this->sprite.setTexture(idleLeft[frame]);
+	}
 }
 
 void Player::pollEvents(SDL_Event& event, float tpf)
 {
-	static float jumpTimer = 0;
-
 	float TPF = tpf;
 	int pixelMovement;
 
 	if (event.type == SDL_KEYDOWN)
 	{
 		if (SDLK_a == event.key.keysym.sym)
-			acclrtn.left = 180 * RS * TPF;
+		{
+			acclrtn.left = 200 * RS * TPF;
+			lookingRight = false;
+		}
 
 		if (SDLK_d == event.key.keysym.sym)
-			acclrtn.right = 180 * RS * TPF;
+		{
+			acclrtn.right = 200 * RS * TPF;
+			lookingRight = true;
+		}
 
 		if (SDLK_w == event.key.keysym.sym)
 		{
@@ -53,12 +199,8 @@ void Player::pollEvents(SDL_Event& event, float tpf)
 			acclrtn.right = 0;
 
 		if (SDLK_w == event.key.keysym.sym)
-		{
 			acclrtn.up = 0;
-			jumpTimer -= tpf;
-			if (jumpTimer < 0)
-				jumpTimer = 0;
-		}
+
 		if (SDLK_s == event.key.keysym.sym)
 			acclrtn.down = 0;
 	}
@@ -73,16 +215,20 @@ void Player::draw() const
 void Player::gravity(float TPF)
 {
 	static float jumpTimer = 0;
+	static float counter = 10;
+	static float fallingCounter = 0;
 
 	if (hasJumped)
 	{
 		if (jumpTimer < 0.4)
 		{
-			acclrtn.up = 550 * RS * TPF;
+			acclrtn.up = 72 * RS * TPF * counter;
+			counter -= TPF * 10;
 			jumpTimer += TPF;
 		}
 		else
 		{
+			counter = 10;
 			acclrtn.up = 0;
 			jumpTimer = 0;
 			hasJumped = false;
@@ -131,22 +277,6 @@ void Player::updatePosition()
 	collisionBox.moveX((acclrtn.right - acclrtn.left));
 	collisionBox.moveY((acclrtn.down - acclrtn.up));
 
-	std::cout << collisionBox.getX() << " " << collisionBox.getY() << '\n';
-
 	sprite.setX(collisionBox.getX() - 8 * RS);
 	sprite.setY(collisionBox.getY());
-}
-
-void Player::updateState()
-{
-	if (acclrtn.none())
-		state = idle;
-	else
-		state = running;
-}
-
-void Player::updatePlayerSprite(int currentFrame)
-{
-	sprite.updateSprite(currentFrame);
-	//TO FINISH
 }
