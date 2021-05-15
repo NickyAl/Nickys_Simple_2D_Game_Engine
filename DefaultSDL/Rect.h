@@ -4,26 +4,26 @@
 
 class Rect
 {
-private:
+protected:
 	float width, height;
 	float xCoord, yCoord;
-	int red, green, blue, alpha;
-	SDL_Texture* texture;
-
-	SDL_Texture** animation;
+	uint8_t red, green, blue, alpha;  //Color if there is no texture
+	SDL_Texture* texture;				//Texture (2D image for the figure)
 
 public:
-
-	Rect(float w, float h, float x, float y, int r, int g, int b, int a);
+	Rect();
+	Rect(float w, float h, float x, float y, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 	Rect(float w, float h, float x, float y, const std::string& image_path);
 	~Rect();
 
 	void draw()const;
-	void pollEvents(SDL_Event& event);
+
+	void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) { red = r; green = g; blue = b; alpha = a; }
 
 	void setX(float x) { xCoord = x; }
 	void setY(float y) { yCoord = y; }
 
+	//movement
 	void moveX(float x) { xCoord += x; }
 	void moveY(float y) { yCoord += y; }
 };

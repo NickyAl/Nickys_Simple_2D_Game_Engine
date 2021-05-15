@@ -27,7 +27,6 @@ void pollEventsForMenu(Window& window, Rect& menu)
 	if (SDL_PollEvent(&event))
 	{
 		window.pollEvents(event);
-		menu.pollEvents(event);
 	}
 }
 
@@ -49,7 +48,7 @@ int main(int argc, char** argv)
 		startMenu.clear();
 
 	}
-	int RS = startMenu.getRS(); //resolution settings
+	float RS = startMenu.getRS(); //resolution settings
 
 
 	//GAME WINDOW///////////////////////////////////////////////////////////////////////////////
@@ -59,8 +58,8 @@ int main(int argc, char** argv)
 
 	//simple rectangles no animation no collision
 	//------------------------------------------------------------------------------------------
-	Rect sky(640 * RS, 360 * RS, 0, 0, "Resources/sky.jpeg");
-	Rect underground(1200 * RS, 600 * RS, 0, 280 * RS, 60, 60, 60, 255);
+	Rect sky(640.f * RS, 360.f * RS, 0.f, 0.f, "Resources/sky.jpeg");
+	Rect underground(1200.f * RS, 600.f * RS, 0.f, 280.f * RS, 60, 60, 60, 255);
 
 	std::list<Rect*> rects;
 	rects.push_back(&underground);
@@ -68,16 +67,16 @@ int main(int argc, char** argv)
 
 	//complex rectangles possible animations and collisions
 	//------------------------------------------------------------------------------------------
-	Object floor1(300 * RS, 60 * RS, 0 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
-	Object floor2(300 * RS, 60 * RS, 300 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
-	Object floor3(300 * RS, 60 * RS, 600 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
-	Object floor4(300 * RS, 60 * RS, 900 * RS, 265 * RS, "Resources/moonfloor.jpg", true);
-	Object box(75 * RS, 75 * RS, 400 * RS, 200 * RS, "Resources/metal box.png", true);
-	Object coin(20 * RS, 20 * RS, 200 * RS, 200 * RS, "Resources/coin/Gold_0.png", false);
-	Object platform(100 * RS, 10 * RS, 700 * RS, 150 * RS, "Resources/platform.jpg", true);
-	Object platform1(100 * RS, 10 * RS, 500 * RS, 100 * RS, "Resources/platform.jpg", true);
-	Object platform2(70 * RS, 10 * RS, 100 * RS, 180 * RS, "Resources/platform.jpg", true);
-	Object platform3(120 * RS, 10 * RS, 510 * RS, 230 * RS, "Resources/platform.jpg", true);
+	Object floor1(300.f * RS, 60.f * RS, 0.f * RS, 265.f * RS, "Resources/moonfloor.jpg", true);
+	Object floor2(300.f * RS, 60.f * RS, 300.f * RS, 265.f * RS, "Resources/moonfloor.jpg", true);
+	Object floor3(300.f * RS, 60.f * RS, 600.f * RS, 265.f * RS, "Resources/moonfloor.jpg", true);
+	Object floor4(300.f * RS, 60.f * RS, 900.f * RS, 265.f * RS, "Resources/moonfloor.jpg", true);
+	Object box(75.f * RS, 75.f * RS, 400.f * RS, 200.f * RS, "Resources/metal box.png", true);
+	Object coin(20.f * RS, 20.f * RS, 200.f * RS, 200.f * RS, "Resources/coin/Gold_0.png", false);
+	Object platform(100.f * RS, 10.f * RS, 700.f * RS, 150.f * RS, "Resources/platform.jpg", true);
+	Object platform1(100.f * RS, 10.f * RS, 500.f * RS, 100.f * RS, "Resources/platform.jpg", true);
+	Object platform2(70.f * RS, 10.f * RS, 100.f * RS, 180.f * RS, "Resources/platform.jpg", true);
+	Object platform3(120.f * RS, 10.f * RS, 510.f * RS, 230.f * RS, "Resources/platform.jpg", true);
 
 	coin.loadAnim("Resources/coin/Gold_", 10);
 
@@ -96,23 +95,22 @@ int main(int argc, char** argv)
 
 	//text for UI
 	//------------------------------------------------------------------------------------------
-	Text text(Window::renderer, "Resources/arial.ttf", 30, "NS2D", { 30, 10, 10, 255 });
+	Text text(Window::renderer, "Resources/arial.ttf", 10 * RS, "NS2D", { 30, 10, 10, 255 });
 
 
 	//Player actor
 	//------------------------------------------------------------------------------------------
 	Player player1(RS);
-	player1.setCollisionBox(40*RS, 70*RS, 280*RS, 180*RS, 255, 200, 10, 1);
-	player1.setSprite(55 * RS, 75 * RS, 272 * RS, 180 * RS, "Resources/maniken/maniken0.png");
-	//player1.getSprite().loadAnim("Resources/Yellow bot/running right/", 22);
-	player1.loadAnim("Resources/Yellow bot/running left/", 22, player1.getRunLeft(), player1.getRunLeftFrames());
-	player1.loadAnim("Resources/Yellow bot/running right/", 22, player1.getRunRight(), player1.getRunRightFrames());
-	player1.loadAnim("Resources/Yellow bot/idle right/", 8, player1.getIdleRight(), player1.getIdleRightFrames());
-	player1.loadAnim("Resources/Yellow bot/idle left/", 8, player1.getIdleLeft(), player1.getIdleLeftFrames());
-	player1.loadAnim("Resources/Yellow bot/fall right/", 4, player1.getFallRight(), player1.getFallRightFrames());
-	player1.loadAnim("Resources/Yellow bot/fall left/", 4, player1.getFallLeft(), player1.getFallLeftFrames());
-	player1.loadAnim("Resources/Yellow bot/jump right/", 8, player1.getJumpRight(), player1.getJumpRightFrames());
-	player1.loadAnim("Resources/Yellow bot/jump left/", 8, player1.getJumpLeft(), player1.getJumpLeftFrames());
+	player1.setCollisionBox(40.f *RS, 65.f *RS, 280.f *RS, 180.f *RS, 255, 200, 10, 1);
+	player1.setSprite(55.f * RS, 75.f * RS, 272.f * RS, 180.f * RS, "Resources/maniken/maniken0.png");
+	player1.loadAnim("Resources/Yellow bot/running right/", 22/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/running left/", 22/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/idle right/", 8/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/idle left/", 8/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/fall right/", 4/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/fall left/", 4/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/jump right/", 8/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
+	player1.loadAnim("Resources/Yellow bot/jump left/", 8/*, player1.animations[0].frames, player1.animations[0].numberOfFrames*/);
 
 	//Const and others used in each frames logic
 	//------------------------------------------------------------------------------------------
@@ -156,7 +154,7 @@ int main(int argc, char** argv)
 		}
 
 		player1.updateSprite(TIME_PER_FRAME);
-		coin.updateSprite(TIME_PER_FRAME, 0.07);
+		coin.updateSprite(TIME_PER_FRAME, 0.07f);
 
 		sky.draw(); //will add fixed to the screen items list if there are more such as this one
 		for (std::list<Rect*>::iterator it = rects.begin(); it != rects.end(); it++)

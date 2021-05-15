@@ -10,7 +10,6 @@ Text::Text(SDL_Renderer* renderer,
 {
 	text_texture = loadFont(renderer, font_path, font_size, message_text, color);
 	SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h); //Generates width and height based on the font size and text lenght
-
 }
 
 void Text::display(int x, int y, SDL_Renderer* renderer) const

@@ -3,29 +3,27 @@
 #include <SDL_image.h>
 #include <iostream>
 
-
-
-Object::Object() :
-	width(40), height(40), xCoord(500), yCoord(500), red(255), green(0), blue(0), alpha(255), hasCollision(false)
+Object::Object() : Rect(), hasCollision(false), animFrames(0)
 {
 }
 
-Object::Object(float w, float h, float x, float y, int r, int g, int b, int a, bool collsn) :
-	width(w), height(h), xCoord(x), yCoord(y), red(r), green(g), blue(b), alpha(a), hasCollision(collsn)
+Object::Object(float w, float h, float x, float y, uint8_t r, uint8_t g, uint8_t b, uint8_t a, bool collsn) :
+	Rect(w, h, x, y, r, g, b, a), hasCollision(collsn), animFrames(0)
 {
 }
 
 Object::Object(float w, float h, float x, float y, const std::string& image_path, bool collsn) :
-	width(w), height(h), xCoord(x), yCoord(y), hasCollision(collsn)
+	Rect(w, h, x, y, 255, 255, 255, 255), hasCollision(collsn), animFrames(0)
 {
 	auto surface = IMG_Load(image_path.c_str()); //c_str converts it to a construct pointer
+	//auto says the type is SDL_Surface but once I change it from auto to SDL_Surface it breaks
 	if (!surface)
 	{
 		std::cerr << "Failed to create surface\n";
 	}
 
-	texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
-	if (!texture)
+	this->texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
+	if (!this->texture)
 	{
 		std::cerr << "Failed to create texture\n";
 	}
@@ -35,26 +33,10 @@ Object::Object(float w, float h, float x, float y, const std::string& image_path
 
 Object::~Object()
 {
-	SDL_DestroyTexture(texture);
+	SDL_DestroyTexture(this->texture);
 }
 
-void Object::draw() const
-{
-	SDL_Rect rect = { xCoord, yCoord, width, height };
-
-	if (texture)
-	{
-		SDL_RenderCopy(Window::renderer, texture, nullptr, &rect);
-	}
-	else
-	{
-		SDL_SetRenderDrawColor(Window::renderer, red, green, blue, alpha);
-		SDL_RenderFillRect(Window::renderer, &rect);
-	}
-}
-
-
-SDL_Texture* Object::LoadTexture(std::string filepath)
+SDL_Texture* Object::LoadTexture(const std::string& filepath)
 {
 	SDL_Texture* newTexture = nullptr;
 
@@ -79,7 +61,7 @@ SDL_Texture* Object::LoadTexture(std::string filepath)
 
 void Object::loadAnim(const std::string& filepath, short int frames)
 {
-	animFrames = frames;
+	this->animFrames = frames;
 	std::string path;
 
 	for (int i = 0; i < frames; i++)
@@ -97,13 +79,13 @@ void Object::updateSprite(float tpf, float cooldown)
 	static float timer = 0;
 	static short int frame = 0;
 
-	int divider = 1000 * cooldown;
+	int divider = (int) (1000 * cooldown);
 
 	timer += tpf;
 
 	if (timer > cooldown)
 	{
-		int check = timer * 1000;
+		int check = (int) timer * 1000;
 		if (check / divider > 1)
 		{
 			frame += check / divider;
@@ -113,8 +95,8 @@ void Object::updateSprite(float tpf, float cooldown)
 		timer = 0;
 	}
 
-	if (frame >= animFrames)
+	if (frame >= this->animFrames)
 		frame = 0;
 	
-	setTexture(animation[frame]);
+	setTexture(this->animation[frame]);
 }

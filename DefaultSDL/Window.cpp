@@ -5,8 +5,14 @@
 
 SDL_Renderer* Window::renderer;
 
+Window::Window() :
+	title("NS2D Default Window") ,width(640), height(360), resolutionSetting(1.0f),
+	closed(false), window(nullptr), openedSettings(false)
+{}
+
 Window::Window(const std::string& newTitle, int newWidth, int newHeight) :
-	title(newTitle), width(newWidth), height(newHeight)
+	title(newTitle), width(newWidth), height(newHeight), resolutionSetting(1.0f),
+	closed(false), window(nullptr)
 {
 	this->closed = !init();
 }
