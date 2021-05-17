@@ -1,6 +1,9 @@
 #pragma once
 #include "Object.h"
+#include <SDL_image.h>
+#include <iostream>
 #include <string>
+#include "Window.h"
 
 class Player
 {
@@ -86,4 +89,3 @@ public:
 	//update
 	void updatePosition();
 };
-

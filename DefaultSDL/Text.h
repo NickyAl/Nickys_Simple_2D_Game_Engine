@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <SDL_ttf.h>
 #include <SDL.h>
 #include <string>

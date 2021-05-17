@@ -1,7 +1,5 @@
 #include "Object.h"
-#include "Tools.h"
-#include <SDL_image.h>
-#include <iostream>
+
 
 Object::Object() : Rect(), hasCollision(false), animFrames(0)
 {
@@ -67,7 +65,7 @@ void Object::loadAnim(const std::string& filepath, short int frames)
 	for (int i = 0; i < frames; i++)
 	{
 		path = filepath;
-		path += Tools::intToString(i);
+		path += std::to_string(i);
 		path += ".png";
 
 		animation.push_back(LoadTexture(path));	

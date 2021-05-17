@@ -1,2 +1,5 @@
-﻿  Player.cpp
+﻿  Collider.cpp
+  Player.cpp
+  main.cpp
+  Generating Code...
   DefaultSDL.vcxproj -> C:\C++ SDL\DefaultSDL\Debug\DefaultSDL.exe

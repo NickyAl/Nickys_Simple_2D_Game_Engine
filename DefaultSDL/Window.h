@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include <SDL.h>
+#include <iostream>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 class Window
 {

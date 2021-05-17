@@ -1,6 +1,5 @@
 #include "Text.h"
-#include <iostream>
-#include "Window.h"
+
 
 Text::Text(SDL_Renderer* renderer,
 	const std::string& font_path,

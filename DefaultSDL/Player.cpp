@@ -1,8 +1,5 @@
 #include "Player.h"
-#include <SDL_image.h>
-#include <iostream>
-#include <string>
-#include "Tools.h"
+
 
 Player::Player() :
 	collisionBox(Object(40 * RS, 65 * RS, 280 * RS, 180 * RS, 0, 255, 0, 255, true)),
@@ -46,7 +43,7 @@ void Player::loadAnim(const std::string& filepath, short int frames/*, std::vect
 	for (int i = 0; i < frames; i++)
 	{
 		path = filepath;
-		path += Tools::intToString(i);
+		path += std::to_string(i);
 		path += ".png";
 
 		animation.push_back(LoadTexture(path));	

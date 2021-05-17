@@ -1,6 +1,8 @@
 #pragma once
 #include "Window.h"
 #include <string>
+#include <SDL_image.h>
+#include <iostream>
 
 class Rect
 {

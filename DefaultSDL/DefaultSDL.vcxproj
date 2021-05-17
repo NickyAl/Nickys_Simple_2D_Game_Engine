@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="MathTools.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -28,7 +30,9 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tools.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="MathTools.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rect.h" />

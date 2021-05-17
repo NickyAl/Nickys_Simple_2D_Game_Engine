@@ -1,6 +1,5 @@
 #include "Rect.h"
-#include <SDL_image.h>
-#include <iostream>
+
 
 Rect::Rect() :
 	width(20), height(20), xCoord(0), yCoord(0), red(255), green(255), blue(255), alpha(255), texture(nullptr)

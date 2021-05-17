@@ -4,9 +4,9 @@
 #include "Text.h"
 #include "Object.h"
 #include "Player.h"
-#include "Tools.h"
-#include <string>
-#include <list>
+#include "Collider.h"
+//#include <string>
+//#include <list>
 #include <chrono>
 
 void pollEvents(Window& window, Player& player1, float time_per_frame)
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 
 
 	//GAME WINDOW///////////////////////////////////////////////////////////////////////////////
-	Window window("Nicky's simple 2D game engine", 640 * RS, 360 * RS);
+	Window window("Nicky's simple 2D game engine", (int)(640 * RS), (int)(360 * RS));
 
 	//GAME PROPS////////////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
 
 	//text for UI
 	//------------------------------------------------------------------------------------------
-	Text text(Window::renderer, "Resources/arial.ttf", 10 * RS, "NS2D", { 30, 10, 10, 255 });
+	Text text(Window::renderer, "Resources/arial.ttf", (int)(10 * RS), "NS2D", { 30, 10, 10, 255 });
 
 
 	//Player actor
@@ -144,13 +144,13 @@ int main(int argc, char** argv)
 
 		if (CAMERA_FOLLOWS_PLAYER)
 		{
-			Tools::CameraFollowsPlayer(player1, rects, objects);
-			Tools::cameraColiider(player1, rects, objects);
+			Collider::CameraFollowsPlayer(player1, rects, objects);
+			Collider::cameraCollider(player1, rects, objects);
 		}
 		else
 		{
 			player1.updatePosition();
-			Tools::playerCollider(player1, objects);
+			Collider::playerCollider(player1, objects);
 		}
 
 		player1.updateSprite(TIME_PER_FRAME);

@@ -2,7 +2,9 @@
 #include "Rect.h"
 #include <string>
 #include <vector>
-#include "Window.h"
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <iostream>
 
 
 //Object is an upgraded Rect with the main difference is that it can have collision
