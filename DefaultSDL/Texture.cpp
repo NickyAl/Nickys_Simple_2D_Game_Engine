@@ -1,6 +1,16 @@
 #include "Texture.h"
 
-SDL_Texture* Texture::LoadTexture(const std::string& filepath)
+Texture::Texture(const std::string& filepath)
+{
+	LoadTexture(filepath);
+}
+
+Texture::~Texture()
+{
+	SDL_DestroyTexture(texture);
+}
+
+void Texture::LoadTexture(const std::string& filepath)
 {
 	SDL_Texture* newTexture = nullptr;
 
@@ -20,5 +30,5 @@ SDL_Texture* Texture::LoadTexture(const std::string& filepath)
 		SDL_FreeSurface(loadedSurf);
 	}
 
-	return newTexture;
+	this->texture = newTexture;
 }

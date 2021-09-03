@@ -4,15 +4,18 @@
 #include <iostream>
 #include <string>
 #include "Window.h"
+#include "Animation.h"
 
 class Player
 {
 private:
 	Object collisionBox;
 	Object sprite;
-
-	//movement
 	float RS; //resolution setting
+
+	//movement5
+	bool hasJumped;
+	bool lookingRight;
 
 	struct Acceleration
 	{
@@ -27,17 +30,7 @@ private:
 
 	Acceleration acclrtn;
 
-	bool hasJumped;
-	bool lookingRight;
-
-	struct PlayerAnimation
-	{
-		std::vector<SDL_Texture*> frames;
-		short int numberOfFrames;
-	};
-
-	//animations
-	std::vector<PlayerAnimation> animations;
+	std::vector<Animation> animations;
 	//index|animation
 	//0		running right
 	//1		running left
@@ -53,8 +46,8 @@ public:
 	Player();
 	Player(float rs);
 
-	SDL_Texture* LoadTexture(const std::string& filepath);
-	void loadAnim(const std::string& filepath, short int frames/*, std::vector<SDL_Texture*>& animation, short int& forFrames*/);
+	void addAnimation(Animation anim) { animations.push_back(anim); }
+
 	void updateSprite(float tpf);
 
 	void pollEvents(SDL_Event& event, float tpf);
@@ -63,11 +56,11 @@ public:
 
 	void gravity(float TPF);
 
-	void setSprite(float w, float h, float x, float y, const char* texture);
+	void setSprite(float w, float h, float x, float y, SDL_Texture* texture);
 	Object& getSprite() { return sprite; }
 
+
 	//for collision
-	void setCollisionBox(float w, float h, float x, float y, const char* texture);
 	void setCollisionBox(float w, float h, float x, float y, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 	Object& getCollisionBox() { return collisionBox; }

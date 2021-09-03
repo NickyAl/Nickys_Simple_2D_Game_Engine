@@ -12,47 +12,6 @@ Player::Player(float rs) : Player()
 	RS = rs;
 }
 
-SDL_Texture* Player::LoadTexture(const std::string& filepath)
-{
-	SDL_Texture* newTexture = nullptr;
-
-	SDL_Surface* loadedSurf = IMG_Load(filepath.c_str());
-
-	if (loadedSurf == nullptr)
-	{
-		std::cerr << "Failed to load pawn texture\n";
-	}
-	else
-	{
-		newTexture = SDL_CreateTextureFromSurface(Window::renderer, loadedSurf);
-		if (newTexture == nullptr)
-		{
-			std::cerr << "Failed to create texture for pawn\n";
-		}
-		SDL_FreeSurface(loadedSurf);
-	}
-
-	return newTexture;
-}
-
-void Player::loadAnim(const std::string& filepath, short int frames/*, std::vector<SDL_Texture*>& animation, short int& framesToBeSet*/)
-{
-	std::string path;
-	std::vector<SDL_Texture*> animation;
-
-	for (int i = 0; i < frames; i++)
-	{
-		path = filepath;
-		path += std::to_string(i);
-		path += ".png";
-
-		animation.push_back(LoadTexture(path));	
-	}
-
-	/*framesToBeSet = frames;*/
-	this->animations.push_back(PlayerAnimation{ animation, frames });
-}
-
 void Player::updateSprite(float tpf)
 {
 
@@ -115,9 +74,9 @@ void Player::updateSprite(float tpf)
 		}
 
 		if (this->lookingRight) //jump right
-			this->sprite.setTexture(this->animations[6].frames[jumpFrame]);
+			this->sprite.setTexture(this->animations[6].animation[jumpFrame]);
 		else //jump left
-			this->sprite.setTexture(this->animations[7].frames[jumpFrame]);
+			this->sprite.setTexture(this->animations[7].animation[jumpFrame]);
 	}
 	//fall
 	else if (!this->canJump && this->acclrtn.up == 0)
@@ -126,9 +85,9 @@ void Player::updateSprite(float tpf)
 			frame = 0;
 
 		if (this->lookingRight) //fall right
-			this->sprite.setTexture(this->animations[4].frames[frame]);
+			this->sprite.setTexture(this->animations[4].animation[frame]);
 		else //fall left
-			this->sprite.setTexture(this->animations[5].frames[frame]);
+			this->sprite.setTexture(this->animations[5].animation[frame]);
 	}
 	//running left
 	else if (this->acclrtn.right - this->acclrtn.left < 0)
@@ -136,7 +95,7 @@ void Player::updateSprite(float tpf)
 		if (frame >= this->animations[1].numberOfFrames)
 			frame = 0;
 
-		this->sprite.setTexture(this->animations[1].frames[frame]);
+		this->sprite.setTexture(this->animations[1].animation[frame]);
 	}
 	//running right
 	else if (this->acclrtn.right - this->acclrtn.left > 0)
@@ -144,7 +103,7 @@ void Player::updateSprite(float tpf)
 		if (frame >= this->animations[0].numberOfFrames)
 			frame = 0;
 
-		this->sprite.setTexture(this->animations[0].frames[frame]);
+		this->sprite.setTexture(this->animations[0].animation[frame]);
 	}
 	//idle
 	else if (this->acclrtn.right - this->acclrtn.left == 0)
@@ -153,9 +112,9 @@ void Player::updateSprite(float tpf)
 			frame = 0;
 
 		if (lookingRight) //dile right
-			this->sprite.setTexture(this->animations[2].frames[frame]);
+			this->sprite.setTexture(this->animations[2].animation[frame]);
 		else //idle left
-			this->sprite.setTexture(this->animations[3].frames[frame]);
+			this->sprite.setTexture(this->animations[3].animation[frame]);
 	}
 }
 
@@ -185,6 +144,8 @@ void Player::pollEvents(SDL_Event& event, float tpf)
 		if (SDLK_s == event.key.keysym.sym)
 			this->acclrtn.down = 180 * RS * TPF;
 
+		if (SDLK_f == event.key.keysym.sym)
+			this->acclrtn.up = 580 * RS * TPF;
 	}
 	else if(event.type == SDL_KEYUP)
 	{
@@ -199,7 +160,11 @@ void Player::pollEvents(SDL_Event& event, float tpf)
 
 		if (SDLK_s == event.key.keysym.sym)
 			this->acclrtn.down = 0;
+
+		if (SDLK_f == event.key.keysym.sym)  //flying for when debuging
+			this->acclrtn.up = 0;
 	}
+	
 }
 
 void Player::draw() const
@@ -234,18 +199,6 @@ void Player::gravity(float TPF)
 	this->acclrtn.down = 350 * RS * TPF;
 }
 
-
-
-//SETTERS
-void Player::setCollisionBox(float w, float h, float x, float y, const char* texture)
-{
-	this->collisionBox.setW(w);
-	this->collisionBox.setH(h);
-	this->collisionBox.setX(x);
-	this->collisionBox.setY(y);
-	this->collisionBox.setTexture(texture);
-}
-
 void Player::setCollisionBox(float w, float h, float x, float y, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	this->collisionBox.setW(w);
@@ -255,7 +208,7 @@ void Player::setCollisionBox(float w, float h, float x, float y, uint8_t r, uint
 	this->collisionBox.setColor(r, g, b, a);
 }
 
-void Player::setSprite(float w, float h, float x, float y, const char* texture)
+void Player::setSprite(float w, float h, float x, float y, SDL_Texture* texture)
 {
 	this->sprite.setW(w);
 	this->sprite.setH(h);

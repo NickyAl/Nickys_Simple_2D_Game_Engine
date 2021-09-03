@@ -11,23 +11,8 @@ Rect::Rect(float w, float h, float x, float y, uint8_t r, uint8_t g, uint8_t b, 
 {
 }
 
-Rect::Rect(float w, float h, float x, float y, const std::string& image_path) :
-	width(w), height(h), xCoord(x), yCoord(y), red(0), green(0), blue(0), alpha(0), texture(nullptr)
-{
-	auto surface = IMG_Load(image_path.c_str()); //c_str converts it to a construct pointer
-	if (!surface)
-	{
-		std::cerr << "Failed to create surface\n";
-	}
-
-	texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
-	if (!texture)
-	{
-		std::cerr << "Failed to create texture\n";
-	}
-
-	SDL_FreeSurface(surface);
-}
+Rect::Rect(float w, float h, float x, float y, SDL_Texture* texture) : width(w), height(h), xCoord(x), yCoord(y), red(0), green(0), blue(0), alpha(0), texture(texture)
+{}
 
 Rect::~Rect()
 {

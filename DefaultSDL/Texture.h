@@ -4,10 +4,14 @@
 #include <iostream>
 #include "Window.h"
 
-class Texture
+//we can not deep copy textures so we keep a pointer to each texture pass it around to the objects
+struct Texture
 {
 	SDL_Texture* texture;
 
-	SDL_Texture* LoadTexture(const std::string& filepath);
+	Texture(const std::string& filepath);
+	~Texture();
+
+	void LoadTexture(const std::string& filepath); //will make static or private later on
 };
 
